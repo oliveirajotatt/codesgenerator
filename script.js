@@ -32,7 +32,9 @@ function createTableRow(data) {
   const commentInput = document.createElement('input');
   commentInput.type = 'text';
   commentInput.value = data.comment; // Set the input value
+  commentInput.placeholder = '';
   commentCell.appendChild(commentInput);
+
   row.appendChild(commentCell);
 
   // Actions cell (contains "Add Row" and "Remove Row" buttons)
@@ -61,8 +63,10 @@ function createTableRow(data) {
   activityDropdown.addEventListener('change', () => {
     if (activityDropdown.value === 'SCT') {
       commentInput.type = 'number'; // Change comment input type to number
+      commentInput.placeholder = 'Please insert the Job ID number'; // Set placeholder
     } else {
       commentInput.type = 'text'; // Revert back to text if not SCT
+      commentInput.placeholder = ''; // Clear placeholder
     }
   });
 
@@ -99,8 +103,10 @@ const initialCommentInput = document.getElementById('comment-input');
 initialActivityDropdown.addEventListener('change', () => {
   if (initialActivityDropdown.value === 'SCT') {
     initialCommentInput.type = 'number'; // Change comment input type to number
+    initialCommentInput.placeholder = 'Please insert the Job ID number'; // Set placeholder
   } else {
     initialCommentInput.type = 'text'; // Revert back to text if not SCT
+    initialCommentInput.placeholder = ''; // Clear placeholder
   }
 });
 
