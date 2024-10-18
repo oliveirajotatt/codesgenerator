@@ -1,0 +1,14 @@
+{
+  "name": "codesgen",
+  "version": "1.0.0",
+  "description": "Generating time tracking codes",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "CodeGen"
+  ],
+  "author": "Mirza Puzic",
+  "license": "ISC"
+}
