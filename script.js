@@ -3,7 +3,7 @@ const tableData = [];
 
 // Function to create a table row from a data object
 function createTableRow(data) {
-    const row = document.createElement('tr');
+  const row = document.createElement('tr');
 
   // Daily activity dropdown
   const activityCell = document.createElement('td');
@@ -57,6 +57,15 @@ function createTableRow(data) {
     actionsCell.appendChild(removeRowButton);
   }
 
+  // Add event listener to the activity dropdown
+  activityDropdown.addEventListener('change', () => {
+    if (activityDropdown.value === 'SCT') {
+      commentInput.type = 'number'; // Change comment input type to number
+    } else {
+      commentInput.type = 'text'; // Revert back to text if not SCT
+    }
+  });
+
   row.appendChild(actionsCell);
 
   // Add the new row data to the tableData array
@@ -67,55 +76,74 @@ function createTableRow(data) {
 
 // Function to add a new row to the table
 function addNewRow() {
-    const newRowData = {
-      activity: dailyActivityDropdownOptions[0],
-      timeSpent: '',
-      comment: '',
-    };
-    const newRow = createTableRow(newRowData);
-    tableData.push(newRowData);
-    const tbody = document.querySelector('tbody');
-    tbody.appendChild(newRow);
-  
-    // Add event listener to the time spent input in the new row
-    const timeSpentInput = newRow.querySelector('input[type="number"]');
-    timeSpentInput.addEventListener('input', () => {
-      newRowData.timeSpent = timeSpentInput.value; // Update the timeSpent property in tableData
-    });
+  const newRowData = {
+    activity: dailyActivityDropdownOptions[0],
+    timeSpent: '',
+    comment: '',
+  };
+  const newRow = createTableRow(newRowData);
+  tableData.push(newRowData);
+  const tbody = document.querySelector('tbody');
+  tbody.appendChild(newRow);
+
+  // Add event listener to the time spent input in the new row
+  const timeSpentInput = newRow.querySelector('input[type="number"]');
+  timeSpentInput.addEventListener('input', () => {
+    newRowData.timeSpent = timeSpentInput.value; // Update the timeSpent property in tableData
+  });
+}
+
+// Add event listener to the initial dropdown to handle SCT selection
+const initialActivityDropdown = document.getElementById('daily-activity-dropdown');
+const initialCommentInput = document.getElementById('comment-input');
+initialActivityDropdown.addEventListener('change', () => {
+  if (initialActivityDropdown.value === 'SCT') {
+    initialCommentInput.type = 'number'; // Change comment input type to number
+  } else {
+    initialCommentInput.type = 'text'; // Revert back to text if not SCT
   }
+});
+
 // Function to generate text from the table data
 function generateText() {
-    const tbody = document.querySelector('tbody');
-    const rows = tbody.querySelectorAll('tr');
-  
-    let text = '---\n '; 
-  
-    // Get the first row data
-    const firstRow = rows[0];
-    const activity = firstRow.querySelector('select').value;
-    const timeSpent = firstRow.querySelector('input[type="number"]').value;
-    text += `*** ${activity}: ${timeSpent}\n `;
-  
-    // Get data from all rows created below
-    for (let i = 1; i < rows.length; i++) {
-      const rowData = rows[i];
-      const activity = rowData.querySelector('select').value;
-      const timeSpent = rowData.querySelector('input[type="number"]').value;
-      text += `*** ${activity}: ${timeSpent}\n`;
-    }
-  
-    // Add comments
-    text += '*** Comments: ';
-    for (let i = 0; i < rows.length; i++) {
-      const rowData = rows[i];
-      const comment = rowData.querySelector('input[type="text"]').value;
+  const tbody = document.querySelector('tbody');
+  const rows = tbody.querySelectorAll('tr');
+
+  let text = '---\n '; 
+
+  // Get the first row data
+  const firstRow = rows[0];
+  const activity = firstRow.querySelector('select').value;
+  const timeSpent = firstRow.querySelector('input[type="number"]').value;
+  text += `*** ${activity}: ${timeSpent}\n `;
+
+  // Get data from all rows created below
+  for (let i = 1; i < rows.length; i++) {
+    const rowData = rows[i];
+    const activity = rowData.querySelector('select').value;
+    const timeSpent = rowData.querySelector('input[type="number"]').value;
+    text += `*** ${activity}: ${timeSpent}\n`;
+  }
+
+  // Add comments
+  text += '*** Comments: ';
+  for (let i = 0; i < rows.length; i++) {
+    const rowData = rows[i];
+    const commentInput = rowData.querySelector('td:nth-child(3) input');
+    const comment = commentInput.value;
+    const activity = rowData.querySelector('select').value;
+    if (activity === 'SCT') {
+      text += `JID: ${comment}`;
+    } else {
       text += `${comment}`;
-      if (i !== rows.length - 1) {
-        text += '; ';
-      }
     }
-    text += '\n---';
-      // Update the generated text in the "generated-text-container" element
+    if (i !== rows.length - 1) {
+      text += '; ';
+    }
+  }
+  text += '\n---';
+
+  // Update the generated text in the "generated-text-container" element
   const generatedTextContainer = document.getElementById('generated-text-container');
   generatedTextContainer.textContent = text;
 
@@ -126,10 +154,11 @@ function generateText() {
   console.log(text);
   return text;
 }
-  const copyCodeButton = document.getElementById('copy-code-button');
-  copyCodeButton.addEventListener('click', copyToClipboard);
 
-  function copyToClipboard() {
+const copyCodeButton = document.getElementById('copy-code-button');
+copyCodeButton.addEventListener('click', copyToClipboard);
+
+function copyToClipboard() {
   const generatedTextContainer = document.getElementById('generated-text-container');
   const text = generatedTextContainer.textContent;
 
@@ -149,15 +178,15 @@ function generateText() {
   alert('Generated code copied to clipboard!');
 }
 
-  // Add event listener to the "Generate Text" button
-  const generateTextButton = document.getElementById('generate-text-button');
-  generateTextButton.addEventListener('click', generateText);
-  
-  // Add event listener to the "Add Row" button
-  const addRowButton = document.getElementById('add-row-button');
-  addRowButton.addEventListener('click', addNewRow);
+// Add event listener to the "Generate Text" button
+const generateTextButton = document.getElementById('generate-text-button');
+generateTextButton.addEventListener('click', generateText);
 
-  // Add event listener to the "Refresh" button
+// Add event listener to the "Add Row" button
+const addRowButton = document.getElementById('add-row-button');
+addRowButton.addEventListener('click', addNewRow);
+
+// Add event listener to the "Refresh" button
 const refreshButton = document.getElementById('refresh-button');
 refreshButton.addEventListener('click', refreshPage);
 
@@ -165,6 +194,7 @@ function refreshPage() {
   // Reload the page to reset all values
   window.location.reload();
 }
+
 // Add event listener to the "Back" button
 const backButton = document.getElementById('back-button');
 backButton.addEventListener('click', () => {
