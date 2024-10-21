@@ -61,11 +61,11 @@ function createTableRow(data) {
 
   // Add event listener to the activity dropdown
   activityDropdown.addEventListener('change', () => {
-    if (activityDropdown.value === 'SCT') {
+    if (activityDropdown.value === 'CSP') {
       commentInput.type = 'number'; // Change comment input type to number
       commentInput.placeholder = 'Please insert the Job ID number'; // Set placeholder
     } else {
-      commentInput.type = 'text'; // Revert back to text if not SCT
+      commentInput.type = 'text'; // Revert back to text if not CSP
       commentInput.placeholder = ''; // Clear placeholder
     }
   });
@@ -97,15 +97,15 @@ function addNewRow() {
   });
 }
 
-// Add event listener to the initial dropdown to handle SCT selection
+// Add event listener to the initial dropdown to handle CSP selection
 const initialActivityDropdown = document.getElementById('daily-activity-dropdown');
 const initialCommentInput = document.getElementById('comment-input');
 initialActivityDropdown.addEventListener('change', () => {
-  if (initialActivityDropdown.value === 'SCT') {
+  if (initialActivityDropdown.value === 'CSP') {
     initialCommentInput.type = 'number'; // Change comment input type to number
     initialCommentInput.placeholder = 'Please insert the Job ID number'; // Set placeholder
   } else {
-    initialCommentInput.type = 'text'; // Revert back to text if not SCT
+    initialCommentInput.type = 'text'; // Revert back to text if not CSP
     initialCommentInput.placeholder = ''; // Clear placeholder
   }
 });
@@ -138,7 +138,7 @@ function generateText() {
     const commentInput = rowData.querySelector('td:nth-child(3) input');
     const comment = commentInput.value;
     const activity = rowData.querySelector('select').value;
-    if (activity === 'SCT') {
+    if (activity === 'CSP') {
       text += `JID: ${comment}`;
     } else {
       text += `${comment}`;
