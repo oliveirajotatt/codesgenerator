@@ -1,179 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Codes Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>CODES GENERATOR</h1>
-  <table>
-    <colgroup>
-      <col style="width: 33%;">
-      <col style="width: 33%;">
-      <col style="width: 33%;">
-      <col style="width: 33%;">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Daily activity</th>
-        <th>Time spent (in hours, e.a 0.5 = 30 min)</th>
-        <th>Comment</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Table rows will be added dynamically using JavaScript -->
-      <tr>
-        <td>
-          <select id="daily-activity-dropdown">
-            <option value="T1">T1</option>
-            <option value="T2">T2</option>
-            <option value="T2Q">T2Q</option>
-            <option value="OTR">OTR</option>
-            <option value="TEAM">TEAM</option>
-            <option value="1ON1">1ON1</option>
-            <option value="TRAIN">TRAIN</option>
-            <option value="CSP">CSP</option>
-            <option value="SCT">SCT</option>
-            <option value="CAP">CAP</option>
-            <option value="OPS">OPS</option>
-          </select>
-        </td>
-        <td><input type="number" hours="0" id="time-spent-input"></td>
-        <td>
-          <input type="text" id="comment-input" placeholder="">
-        </td>
-        <td>
-          <button id="add-row-button">Add Row</button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
+  <div class="table-container">
+    <table>
+      <thead>
         <tr>
-          <td colspan="4">
-            <button id="generate-text-button">Generate code</button>
-          </td>
+          <th>Daily activity</th>
+          <th>Time spent (hours)</th>
+          <th>Comment</th>
+          <th>Actions</th>
         </tr>
+      </thead>
+      <tbody>
         <tr>
-          <td colspan="4">
+          <td>
+            <select id="daily-activity-dropdown">
+              <option value="T1">T1</option>
+              <option value="T2">T2</option>
+              <option value="T2Q">T2Q</option>
+              <option value="OTR">OTR</option>
+              <option value="TEAM">TEAM</option>
+              <option value="1ON1">1ON1</option>
+              <option value="TRAIN">TRAIN</option>
+              <option value="CSP">CSP</option>
+              <option value="SCT">SCT</option>
+              <option value="CAP">CAP</option>
+              <option value="OPS">OPS</option>
+            </select>
+          </td>
+          <td><input type="number" id="time-spent-input"></td>
+          <td><input type="text" id="comment-input"></td>
+          <td><button id="add-row-button">Add Row</button></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" class="button-container">
+            <button id="generate-text-button">Generate Code</button>
             <div id="generated-text-container"></div>
-         <div id="copy-code-container" style="display: none;">
-           <button id="copy-code-button">Copy Code</button>     
+            <div id="copy-code-container" style="display: none;">
+              <button id="copy-code-button">Copy Code</button>
+            </div>
           </td>
         </tr>
       </tfoot>
     </table>
-    <!-- Add the refresh button here -->
-    <div class="button-container">
-      <button id="refresh-button">Refresh</button>
   </div>
-</div>
+  <div class="button-container">
+    <button id="refresh-button">Refresh</button>
+  </div>
 
-<table>
-  <colgroup>
-    <col style="width: 33%;">
-    <col style="width: 33%;">
-    <col style="width: 33%;">
-    <col style="width: 33%;">
-  </colgroup>
-  <table>
-    <div class="legend">
-      <table>
-        <tr>
-          <th>Activity Code</th>
-          <th>Information</th>
-        </tr>
-        <tr>
-          <td>T1</td>
-          <td>
-            <ul>
-              <li>Conducting technical interviews</li>
-              <li>Additional tasks for T1 interviews</li>
-              <li>Late reschedules of T1 call</li>
-              <li>No show</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>T2</td>
-          <td>
-            <ul>
-              <li>Conducting technical interviews</li>
-              <li>Additional tasks for T2 interviews</li>
-              <li>Reschedules on the call</li>
-              <li>No show</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>T2Q</td>
-          <td>
-            <ul>
-              <li>Email communication with talent about T2 (Median: 0h. Limit: 0.5h. Expected average per talent: 0.05h)</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>OTR</td>
-          <td>
-            <ul>
-              <li>Online test reviews sent by screening assistants that are not part of the Technical 1 (T1) interviews</li>
-              <li>Portofolio review</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>TEAM</td>
-          <td>
-            <ul>
-              <li>Attendance at weekly meetings</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>TEAM</td>
-          <td>
-            <ul>
-              <li>1:1s with Team Lead</li>
-            </ul>
-          </td>
-        </tr>
-          <tr>
-            <td>CSP</td>
-            <td>
-              <ul>
-                <li>Everything related to creation of custom screening paths (calls not included)</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td>SCT</td>
-            <td>
-              <ul>
-                <li>Screening content creation (OT, T1, T2) + reviews of new or repurposed content</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td>CAP</td>
-            <td>
-              <ul>
-                <li>Working on new initiatives with the capabilities team, creating workshops for other teams</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td>OPS</td>
-            <td>
-              <ul>
-                <li>Helping with internal projects</li>
-              </ul>
-            </td>
-          </tr>
-        </table>
-      </div>
-  </html>
+  <div class="legend table-container">
+    <table>
+      <tr>
+        <th>Activity Code</th>
+        <th>Information</th>
+      </tr>
+      <tr>
+        <td>T1</td>
+        <td>Conducting technical interviews, additional tasks for T1 interviews, late reschedules, no-show.</td>
+      </tr>
+      <tr>
+        <td>T2</td>
+        <td>Conducting T2 interviews, additional tasks, reschedules, no-show.</td>
+      </tr>
+      <tr>
+        <td>T2Q</td>
+        <td>Email communication with talent about T2.</td>
+      </tr>
+      <tr>
+        <td>OTR</td>
+        <td>Online test reviews, portfolio review.</td>
+      </tr>
+      <tr>
+        <td>TEAM</td>
+        <td>Attendance at weekly meetings.</td>
+      </tr>
+      <tr>
+        <td>1ON1</td>
+        <td>1:1s with Team Lead.</td>
+      </tr>
+      <tr>
+        <td>CSP</td>
+        <td>Custom screening path creation.</td>
+      </tr>
+      <tr>
+        <td>SCT</td>
+        <td>Screening content creation and reviews.</td>
+      </tr>
+      <tr>
+        <td>CAP</td>
+        <td>Working on new initiatives, workshops.</td>
+      </tr>
+      <tr>
+        <td>OPS</td>
+        <td>Helping with internal projects.</td>
+      </tr>
+    </table>
+  </div>
   <script src="script.js"></script>
 </body>
-
 </html>
